@@ -15,7 +15,6 @@ public class SimulateProcesses {
 		
 		processCount = number;
 		processQueue = new Process[processCount];
-		readyQueue = new Process[processCount];
 		
 	} //end constructor
 	
