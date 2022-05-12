@@ -1,5 +1,6 @@
 package FinalProject;
 
+import java.util.HashMap;
 import java.util.Random;
 
 public class SimulateProcesses {
@@ -8,7 +9,7 @@ public class SimulateProcesses {
 	int pQcounter = 0;
 	int totalBurstTime = 0;
 	Process[] processQueue;
-	Process[] readyQueue;
+	HashMap<Integer,String> sortQueue = new HashMap<Integer,String>();
 	
 	SimulateProcesses(int number){
 		
@@ -24,6 +25,7 @@ public class SimulateProcesses {
 			processQueue[pQcounter] = P;
 			totalBurstTime += processQueue[pQcounter].getBurstTime();
 			addArrivalTime(pQcounter);
+			processInReadyQueue(pQcounter);
 			pQcounter++;
 		} //end if
 		
@@ -40,15 +42,27 @@ public class SimulateProcesses {
 	} //end printProcess
 	
 	public void addArrivalTime(int index) {
-		readyQueue[index] = processQueue[index];
 		if(index == 0) {
-			readyQueue[index].setArrivalTime(0);
+			processQueue[index].setArrivalTime(0);
 		}else {
 			Random rn = new Random();
 			int time = (1+ rn.nextInt(totalBurstTime/3));
-			//time = (int) (time%(0.8*totalBurstTime));
-			readyQueue[index].setArrivalTime(time);
+			processQueue[index].setArrivalTime(time);
 		} //end if-else
 	} // end addArrivalTime
+	
+	public void processInReadyQueue(int index) {
+		
+		for(int i=index; i>1; i--) {
+			if(processQueue[i].arrivalTime < processQueue[i-1].arrivalTime) {
+				Process temp = processQueue[i];
+				processQueue[i] = processQueue[i-1];
+				processQueue[i-1] = temp;
+			}else {
+				break;
+			}
+		}
+		
+	} //end processInReadyQueue
 
 } //end class
