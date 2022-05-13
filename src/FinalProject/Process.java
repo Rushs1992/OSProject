@@ -28,7 +28,7 @@ public class Process {
 	} //end getArrivalTime
 	
 	public void setPriority(int pLevel) {
-		arrivalTime = pLevel;
+		priority = pLevel;
 	}// end setPriority
 	
 	public int getPriority() {

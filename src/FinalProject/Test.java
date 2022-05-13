@@ -20,11 +20,8 @@ public class Test {
 	}
 	
 	static void initializeProcess(SimulateProcesses S) {
-		Random rn = new Random();
-		
 		for(int i=1; i<11; i++) {
 			Process P = new Process(i);
-			P.setBurstTime(1 + rn.nextInt(15));
 			S.addProcesses(P);
 		} //end for
 		
