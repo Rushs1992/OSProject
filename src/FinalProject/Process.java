@@ -11,6 +11,10 @@ public class Process {
 		PID = ID;
 	} // end constructor
 	
+	public int getPID() {
+		return PID;
+	}
+	
 	public void setBurstTime(int bTime) {
 		burstTime = bTime;
 	}// end setBurstTime
