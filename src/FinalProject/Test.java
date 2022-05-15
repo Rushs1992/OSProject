@@ -15,8 +15,10 @@ public class Test {
 		
 		//Meet make out put
 		
-		System.out.println("\nMeet is here. woohoo!");
-		
+		System.out.println("\nMeet");
+		ShortestJobFirst T1 = new ShortestJobFirst();
+		T1.Test_SPF(S);
+		T1.DoShortestJobFirst(S);
 	}
 	
 	static void initializeProcess(SimulateProcesses S) {
