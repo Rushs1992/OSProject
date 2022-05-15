@@ -48,10 +48,10 @@ public class ShortestJobFirst {
 			currentTAT = (currentCompletionTime - S.processQueue[minimumProcessID].arrivalTime);
 			totalTAT += currentTAT;
 			totalWT += currentTAT - S.processQueue[minimumProcessID].getBurstTime();
-			
+			System.out.println("Completed Process Count: " + completedProcesses );
 			arrCompletedProcesses[minimumProcessID] +=1;
 			completedProcesses +=1;
-			
+			currentTime = currentCompletionTime;
 //			if(minimumProcessID != -1) {
 //				totalTAT += S.processQueue[minimumProcessID]
 //			}
