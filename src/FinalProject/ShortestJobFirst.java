@@ -38,7 +38,7 @@ public class ShortestJobFirst {
 				}
 			}
 //			if(minimumProcessID != -1) {
-				totalTAT += S.processQueue[minimumProcessID]
+//				totalTAT += S.processQueue[minimumProcessID]
 //			}
 //			else {
 //				currentTime++;
