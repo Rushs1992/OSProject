@@ -10,19 +10,21 @@ public class Test {
 		SimulateProcesses S = new SimulateProcesses(10);
 		initializeProcess(S);
 		S.printProcess();
+		Priority obj = new Priority();
+		obj.scheduleProcesses(S);
 		
-		//Juan make out put
-		
-		//Meet make out put
-		
-		System.out.println("\nMeet");
-		ShortestJobFirst T1 = new ShortestJobFirst();
-		T1.Test_SPF(S);
-		T1.DoShortestJobFirst(S);
-	}
+//		//Juan make out put
+//		
+//		//Meet make out put
+//		
+//		System.out.println("\nMeet");
+//		ShortestJobFirst T1 = new ShortestJobFirst();
+//		T1.Test_SPF(S);
+//		T1.DoShortestJobFirst(S);
+	} //end psvm
 	
 	static void initializeProcess(SimulateProcesses S) {
-		for(int i=1; i<11; i++) {
+		for(int i=1; i<=10; i++) {
 			Process P = new Process(i);
 			S.addProcesses(P);
 		} //end for

@@ -19,6 +19,10 @@ public class SimulateProcesses {
 		
 	} //end constructor
 	
+	public int getProcessCount() {
+		return processCount;
+	} // end getProcessCount
+	
 	public void addProcesses(Process P) {
 		
 		if(pQcounter < processCount) {
