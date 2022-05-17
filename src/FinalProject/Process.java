@@ -11,6 +11,10 @@ public class Process {
 		PID = ID;
 	} // end constructor
 	
+	public Process() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getPID() {
 		return PID;
 	}

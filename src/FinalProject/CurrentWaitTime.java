@@ -1,12 +1,13 @@
 package FinalProject;
 
+import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
 public class CurrentWaitTime {
 
 	Process[] readyQueue;
-	Queue<Process> test = new PriorityQueue<Process>();
+	Queue<Process> test = new LinkedList<Process>();
 	CurrentWaitTime(){
 		
 	} //end constructor
@@ -20,6 +21,8 @@ public class CurrentWaitTime {
 		for(int j=0; j<S.processCount;j++ ) {
 			test.add(readyQueue[j]);
 		}
+		System.out.println("Queue length: " + test.size());
 		System.out.println("1st element: " + test.remove().getPID());
+		System.out.println("Queue length: " + test.size());
 }
 }// end class

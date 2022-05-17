@@ -12,11 +12,7 @@ public class Test {
 		S.printProcess();
 		Priority obj = new Priority();
 		obj.scheduleProcesses(S);
-		//Meet make out put
-		
-	
 
-//		//Juan make out put
 		
 		System.out.println("\nJuan");
 		RoundRobin R1 = new RoundRobin();
@@ -29,6 +25,9 @@ public class Test {
 		ShortestJobFirst T1 = new ShortestJobFirst();
 		T1.Test_SPF(S);
 		T1.DoShortestJobFirst(S);
+		
+		CurrentWaitTime C = new CurrentWaitTime();
+		C.testfucn(S);
 	} //end psvm
 
 	
