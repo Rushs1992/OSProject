@@ -12,8 +12,7 @@ public class Test {
 		S.printProcess();
 		Priority obj = new Priority();
 		obj.scheduleProcesses(S);
-		
-
+		//Meet make out put
 		
 	
 
@@ -31,6 +30,7 @@ public class Test {
 		T1.Test_SPF(S);
 		T1.DoShortestJobFirst(S);
 	} //end psvm
+
 	
 static void initializeProcess(SimulateProcesses S) {
 		for(int i=1; i<=10; i++) {
