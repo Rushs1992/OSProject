@@ -10,9 +10,8 @@ public class Test {
 		SimulateProcesses S = new SimulateProcesses(10);
 		initializeProcess(S);
 		S.printProcess();
-		
-		//Juan make out put
-		
+		Priority obj = new Priority();
+		obj.scheduleProcesses(S);
 		//Meet make out put
 		
 		System.out.println("\nMeet\n");
@@ -20,9 +19,10 @@ public class Test {
 //		T1.Test_SPF(S);
 		T1.DoShortestJobFirst(S);
 	}
+
 	
 	static void initializeProcess(SimulateProcesses S) {
-		for(int i=1; i<11; i++) {
+		for(int i=1; i<=10; i++) {
 			Process P = new Process(i);
 			S.addProcesses(P);
 		} //end for
