@@ -15,9 +15,9 @@ public class Test {
 		
 		//Meet make out put
 		
-		System.out.println("\nMeet");
+		System.out.println("\nMeet\n");
 		ShortestJobFirst T1 = new ShortestJobFirst();
-		T1.Test_SPF(S);
+//		T1.Test_SPF(S);
 		T1.DoShortestJobFirst(S);
 	}
 	
