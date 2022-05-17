@@ -14,19 +14,31 @@ public class Test {
 		obj.scheduleProcesses(S);
 		//Meet make out put
 		
-		System.out.println("\nMeet\n");
+	
+
+//		//Juan make out put
+		
+		System.out.println("\nJuan");
+		RoundRobin R1 = new RoundRobin();
+		int[] completed_time = R1.getCompTime(S, 3);
+		R1.print_results(completed_time, S);
+//		
+//		//Meet make out put
+//		
+		System.out.println("\nMeet");
 		ShortestJobFirst T1 = new ShortestJobFirst();
-//		T1.Test_SPF(S);
+		T1.Test_SPF(S);
 		T1.DoShortestJobFirst(S);
-	}
+	} //end psvm
 
 	
-	static void initializeProcess(SimulateProcesses S) {
+static void initializeProcess(SimulateProcesses S) {
 		for(int i=1; i<=10; i++) {
 			Process P = new Process(i);
 			S.addProcesses(P);
 		} //end for
 		
 	}// end initializeProcess
+
 
 } //end class

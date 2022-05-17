@@ -1,144 +1,137 @@
 package FinalProject;
 
 public class RoundRobin {
-	  int pid;
-	  int arrival_time;
-	  int burst_cpu;
-	  int remaining_time;
-	  int completed_time;
-	  int response_time;
-	  int turn_around;
-	  int waiting_time;
-	  int quantum;
+	  int[] response_time;
+	  int[] turn_around;
+	  int[] waiting_time;
 	  
 	  public RoundRobin() {
 		  
 		  
 	  }
 	  
-	  public RoundRobin(int pid,int arrival_time,int burst_time) {
-		  this.pid = pid;
-		  this.arrival_time = arrival_time;
-		  this.burst_cpu = burst_time;
-	  }
+	 
 	  
-	  public void getCompTime(RoundRobin processes[],int quantum) {
+	  public int[] getCompTime(SimulateProcesses S,int quantum) {
+		  int[] rem_time = new int[S.processQueue.length];
+		  boolean[] first_contact = new boolean[S.processQueue.length];
 		  int completed = 0;
-		  int time = 0;
 		  int id = 0;
-		  int in_queue = 0;
-		  boolean cpu_busy = false;
-		  RoundRobin[] ready_queue = new RoundRobin[processes.length];
-		  RoundRobin in_cpu = new RoundRobin();
+		  int time = 0;
+		  boolean count = false;
+		  response_time = new int[S.processQueue.length];
+		  int[] completed_time = new int[S.processQueue.length];
+		  Process[] queue = new Process[S.processQueue.length];
+		  int[] arrival_time = new int[S.processQueue.length];
+		  Process in_cpu = null;
+		  Process tmp = null;
 		  
-		  for(int i = 0; i < processes.length; i++) {
-			  processes[i].remaining_time = processes[i].burst_cpu;
-			  processes[i].quantum = quantum;
+		  
+		  int in_queue = S.processQueue.length-1;
+		  
+		  for(int i = 0; i < S.processQueue.length; i++) {
+			 arrival_time[S.processQueue[i].getPID()-1] =  S.processQueue[i].arrivalTime;
+			 first_contact[S.processQueue[i].getPID()-1] = false;
+			 rem_time[S.processQueue[i].getPID()-1] = S.processQueue[i].burstTime;
+			 queue[i] = S.processQueue[i];
 		  }
 		  
-		  while(completed != processes.length) {
+		  while(completed != queue.length) {
 			  //Processes are put in the ready queue as they arrive
-			  for(int i = 0; i < processes.length; i++) {
-				  if(processes[i].arrival_time == time) {
-					  ready_queue[in_queue] = processes[i];
-					  in_queue++;
+			  if(in_cpu == null) {
+				  in_cpu = queue[0];
+				  id = queue[0].PID-1;
+				  queue[0] = null;
+				  count = true;
+				  if(first_contact[id] == false) {
+					  response_time[id] = time;
+					  first_contact[id] = true;
 				  }
 			  }
 			  
-			  
-			  // If a process is done with its execution, its completed time is saved and replaced
-			  if(processes[id].remaining_time == 0) {
-				  processes[id].completed_time = time;
+			  if(rem_time[id] == 0) {
 				  completed++;
-				  if(ready_queue[0] != null) {
-					  in_cpu = ready_queue[0];
-		        	    id = ready_queue[0].pid;
-		        	    ready_queue[0] = null;
-		        	    cpu_busy = true;
-		        	    for(int i = 0; i < in_queue; i++){
-		        	      ready_queue[i] = ready_queue[i+1];
-		        	      ready_queue[i+1] = null;
-		        	    }
-		        	    in_queue--;
-				  }// Processes are preempted if they exceed the quantum
-			  }else if(processes[id].quantum == 0 & time != 0){
-		    	    if(ready_queue[0].burst_cpu > 0){
-		     	       ready_queue[in_queue] = in_cpu;
-		     	       processes[id].quantum = quantum;
-		     	       in_cpu = ready_queue[0];
-		     	       id = ready_queue[0].pid;
-		     	       ready_queue[0] = null;
-		     	       cpu_busy = true;
-		     	       for(int i = 0; i < in_queue; i++){
-		     	    	   ready_queue[i] = ready_queue[i+1];
-		     	    	   ready_queue[i+1] = null;
-		     	       }
-		     	     }// If the CPU has never been used 
-		     }else if(cpu_busy == false){
-		    	 if(ready_queue[0].burst_cpu > 0){
-		      	   in_cpu = ready_queue[0];
-		      	   id = ready_queue[0].pid;
-		      	   ready_queue[0] = null;
-		      	   in_queue--;
-		      	   cpu_busy = true;
-
-		      	 }
-
-		     }
-
+				  completed_time[id] = time;
+				  in_cpu = queue[0];
+				  count = false;
+				  quantum = 3;
+				  for(int i = 0; i < in_queue;i++) {
+					  queue[i] = queue[i+1];
+					  queue[i+1] = null;
+					  
+				  }
+				  in_queue--;
+				  
+			  }
 			  
-			  processes[id].remaining_time--;
-			  processes[id].quantum--;
+			  if(quantum == 0) {
+				  tmp = in_cpu;
+				  in_cpu = queue[0];
+				  count = false;
+				  quantum = 3;
+				  for(int i = 0; i < in_queue;i++) {
+					  queue[i] = queue[i+1];
+					  queue[i+1] = null;
+					  
+				  }
+				  queue[in_queue] = tmp;
+				  
+			  }
+			  
+			
+
+			if(count == true) {
+			  rem_time[id]--;
+			  quantum--;
 			  time++;
+			 }
 		  }
 		  
-		  
+		  return completed_time;
 	  }
 	  
 	  
-	  public static void print_results(RoundRobin[] processes) {
+	  public void print_results(int[] completed_time, SimulateProcesses S) {
+		  	int[] arrival_time = new int[S.processQueue.length];
+		  	int[] burst_time = new int[S.processQueue.length];
+		  	turn_around = new int[S.processQueue.length];
+		  	waiting_time = new int[S.processQueue.length];
+		  	Process[] queue = new Process[S.processQueue.length];
 		  	float avg_turn_around = 0;
 			float avg_waiting = 0;
 			
+			
+			 for(int i = 0; i < S.processQueue.length; i++) {
+				 arrival_time[S.processQueue[i].getPID()-1] =  S.processQueue[i].arrivalTime;
+				 burst_time[S.processQueue[i].getPID()-1] =  S.processQueue[i].burstTime;
+				 queue[i] = S.processQueue[i];
+			  }
+			
 			// Calculating the turn around and waiting time for each process
-			for(int i = 0; i < processes.length; i++){
-				processes[i].turn_around = processes[i].completed_time - processes[i].arrival_time;
-				processes[i].waiting_time = processes[i].turn_around - processes[i].burst_cpu;
+			for(int i = 0; i < completed_time.length; i++){
+				turn_around[i] = completed_time[i] - arrival_time[i];
+				waiting_time[i] = turn_around[i] - burst_time[i];
 			}
 			
 			
 			// Printing the values for each of the processes
-			System.out.println("Processes "+" Arrival Time "+" Burst Time "+"Completion Time "+"Turn Around Time "+" Waiting Time");
+			System.out.println("Processes "+" Arrival Time "+" Burst Time "+"	Completion Time "+"Response Time	"+"Turn Around Time "+" Waiting Time ");
 			
-			for(int i = 0; i < processes.length; i++){
-				System.out.println("P"+(i+1)+"\t\t"+processes[i].arrival_time+"\t\t "+processes[i].burst_cpu+"\t\t "+processes[i].completed_time+"\t\t "+processes[i].turn_around+"\t\t "+processes[i].waiting_time);
+			for(int i = 0; i < completed_time.length; i++){
+				System.out.println("P"+(i+1)+"\t\t"+arrival_time[i]+"\t\t "+burst_time[i]+"\t\t "+completed_time[i]+"\t\t "+response_time[i]+"\t\t "+turn_around[i]+"\t\t "+waiting_time[i]);
 			}
 			
 			// We calculate the average turn around and waiting time
-			for(int i = 0; i < processes.length; i++){
-				avg_turn_around = avg_turn_around + processes[i].turn_around;
-				avg_waiting = avg_waiting + processes[i].waiting_time;
+			for(int i = 0; i < completed_time.length; i++){
+				avg_turn_around = avg_turn_around + turn_around[i];
+				avg_waiting = avg_waiting + waiting_time[i];
 			}
 			
 			// Printing those values
-			System.out.println("Average Turn Around: "+avg_turn_around/processes.length+"\t\t"+"Average Waiting Time: "+avg_waiting/processes.length);
+			System.out.println("Average Turn Around: "+avg_turn_around/turn_around.length+"\t\t"+"Average Waiting Time: "+avg_waiting/waiting_time.length);
 		  
 	  }
 
-	public static void main(String[] args) {
-		int quantum = 3;
-		RoundRobin p1 = new RoundRobin();
-		RoundRobin processes[] = new RoundRobin[5];
-		processes[0] = new RoundRobin(0,0,7);
-		processes[1] = new RoundRobin(1,2,4);
-		processes[2] = new RoundRobin(2,4,1);
-		processes[3] = new RoundRobin(3,5,4);
-		processes[4] = new RoundRobin(4,6,4);
-		p1.getCompTime(processes, quantum);
-		print_results(processes);
-		
-		
-
-	}
+	
 
 }
