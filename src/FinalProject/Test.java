@@ -25,9 +25,7 @@ public class Test {
 		ShortestJobFirst T1 = new ShortestJobFirst();
 		T1.Test_SPF(S);
 		T1.DoShortestJobFirst(S);
-		
-		CurrentWaitTime C = new CurrentWaitTime();
-		C.testfucn(S);
+
 	} //end psvm
 
 	
