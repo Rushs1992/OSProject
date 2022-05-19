@@ -10,6 +10,7 @@ public class ProcessNewProperties {
 	float waitTime;
 	boolean completed;
 	boolean setResponseTime;
+	boolean firstWaitTime;
 
 	ProcessNewProperties(Process P, int index){
 		
@@ -21,5 +22,6 @@ public class ProcessNewProperties {
 		readyQueueIndex = index;
 		completed = false;
 		setResponseTime = true;
+		firstWaitTime = true;
 	} // end constructor
 }

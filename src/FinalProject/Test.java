@@ -7,7 +7,7 @@ public class Test {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		System.out.println("Rushang created the test file");
-		SimulateProcesses S = new SimulateProcesses(10);
+		SimulateProcesses S = new SimulateProcesses(5);
 		initializeProcess(S);
 		S.printProcess();
 		Priority obj = new Priority();
@@ -26,11 +26,17 @@ public class Test {
 		T1.Test_SPF(S);
 		T1.DoShortestJobFirst(S);
 
+		// Current Wait Time Algorithm
+		
+		CurrentWaitTime C = new CurrentWaitTime(S);
+		C.scheduler();
+		C.printAnalysis();
+		
 	} //end psvm
 
 	
 static void initializeProcess(SimulateProcesses S) {
-		for(int i=1; i<=10; i++) {
+		for(int i=1; i<=5; i++) {
 			Process P = new Process(i);
 			S.addProcesses(P);
 		} //end for

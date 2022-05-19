@@ -37,6 +37,7 @@ public class CurrentWaitTime {
 		if(start && (newReadyQueue.length>0)) {
 			running.add(newReadyQueue[0]);
 			scheduleProcess();
+			start = false;
 		}
 	} //end scheduleProcess
 	
@@ -46,7 +47,7 @@ public class CurrentWaitTime {
 			currentProcess = running.remove();
 			if(currentProcess.setResponseTime) {
 				int index = currentProcess.readyQueueIndex;
-				processAnalysis[index][3] = currentTime;
+				processAnalysis[index][3] = currentTime - newReadyQueue[index].arrivalTime;
 				currentProcess.setResponseTime = false;
 			}
 			currentProcess.waitTime = 0;
@@ -59,6 +60,8 @@ public class CurrentWaitTime {
 				timeInCPU = currentProcess.remaingBurstTime;
 				currentTime += timeInCPU;
 				currentProcess.remaingBurstTime -= timeInCPU;
+				int index = currentProcess.readyQueueIndex;
+				processAnalysis[index][1] = currentTime;
 				currentProcess.completed = true;
 				addWaitTime(timeInCPU);
 				scheduleNextProcess();
@@ -69,10 +72,19 @@ public class CurrentWaitTime {
 
 	private void addWaitTime(int time) {
 		for(int i = 0; i < newReadyQueue.length ; i++) {
-			if(newReadyQueue[i].arrivalTime<= currentTime) {
+			if(newReadyQueue[i].arrivalTime< currentTime) {
 				if(newReadyQueue[i].PID != currentProcess.PID && (!newReadyQueue[i].completed)) {
-					newReadyQueue[i].waitTime += (time/newReadyQueue[i].priority);
-					processAnalysis[i][2] += time;
+					if(newReadyQueue[i].firstWaitTime) {
+						newReadyQueue[i].waitTime += ((currentTime - newReadyQueue[i].arrivalTime)*(1.0));
+						newReadyQueue[i].firstWaitTime = false;
+						processAnalysis[i][2] += (currentTime - newReadyQueue[i].arrivalTime);
+					}else {
+						newReadyQueue[i].waitTime += time;
+						processAnalysis[i][2] += time;
+					} // end inner if-else
+					if(newReadyQueue[i].priority >1) {
+						newReadyQueue[i].waitTime *= (1-(newReadyQueue[i].priority*0.1));
+					}
 				} //end if
 			}else {
 				break;
@@ -85,7 +97,7 @@ public class CurrentWaitTime {
 		float maxWaitTime = -1;
 		for(int i = 0; i < newReadyQueue.length ; i++) {
 			if(newReadyQueue[i].arrivalTime<= currentTime) {
-				if(newReadyQueue[i].PID != currentProcess.PID && (!newReadyQueue[i].completed)) {
+				if((!newReadyQueue[i].completed)) {
 					if(newReadyQueue[i].waitTime > maxWaitTime) {
 						maxWaitTime = newReadyQueue[i].waitTime;
 						nextProcessIndex = i;
@@ -95,11 +107,27 @@ public class CurrentWaitTime {
 				break;
 			} //end if-else
 		} //end for
-		if(maxWaitTime > 0 && (nextProcessIndex >= 0)) {
+		if(maxWaitTime >= 0 && (nextProcessIndex >= 0)) {
 			running.add(newReadyQueue[nextProcessIndex]);
 		}
 	} //end scheduleNextProcess
-
-
 	
+	public void printAnalysis() {
+		System.out.println("\n Current Wait Time Algorithm\n");
+		System.out.println("\nProcesses Information\n\nID\tBurst Time\tArrival Time\tPriority\n");
+		for(int i=0; i< readyQueue.length; i++) {
+			System.out.println(readyQueue[i].PID + "\t" + readyQueue[i].getBurstTime()+ "\t\t"
+					 + readyQueue[i].getArrivalTime() + "\t\t" + readyQueue[i].getPriority());
+		}//end for
+		
+		System.out.println("******************************************************");
+		System.out.println("Process ID|\tCompletion Time|\tWait Time|\t"
+				+ "Response Time|\tTurn Around Time|");
+		System.out.println("--------------------------------------------------------------------------------------------------------");
+		for(int i = 0; i < readyQueue.length; i++) {
+			System.out.println(processAnalysis[i][0] + "\t\t" + processAnalysis[i][1] + "\t\t\t"
+					+ processAnalysis[i][2] + "\t\t" + processAnalysis[i][3] + "\t\t"
+					 + processAnalysis[i][4]);
+		} // end for
+	}
 }// end class
