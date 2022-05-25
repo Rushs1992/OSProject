@@ -6,25 +6,33 @@ public class Test {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		System.out.println("Rushang created the test file");
-		SimulateProcesses S = new SimulateProcesses(5);
+		System.out.println("\nRushang");
+		SimulateProcesses S = new SimulateProcesses(10);
 		initializeProcess(S);
 		S.printProcess();
 		Priority obj = new Priority();
 		obj.scheduleProcesses(S);
+		System.out.println("\nRushang finish");
+
 
 		
-		System.out.println("\nJuan");
+		System.out.println("\nJuan\n");
+		System.out.println("\nRound Robin Execution\n");
 		RoundRobin R1 = new RoundRobin();
 		int[] completed_time = R1.getCompTime(S, 3);
 		R1.print_results(completed_time, S);
-//		
-//		//Meet make out put
-//		
+		System.out.println("\nJuan finish");
+
+		
+		
+		//Meet make out put
+		
 		System.out.println("\nMeet");
 		ShortestJobFirst T1 = new ShortestJobFirst();
-		T1.Test_SPF(S);
+//		T1.Test_SPF(S);
 		T1.DoShortestJobFirst(S);
+		System.out.println("\nMeet finish\n");
+
 
 		// Current Wait Time Algorithm
 		
@@ -36,7 +44,7 @@ public class Test {
 
 	
 static void initializeProcess(SimulateProcesses S) {
-		for(int i=1; i<=5; i++) {
+		for(int i=1; i<=10; i++) {
 			Process P = new Process(i);
 			S.addProcesses(P);
 		} //end for
