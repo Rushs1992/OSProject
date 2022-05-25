@@ -45,25 +45,23 @@ public class CurrentWaitTime {
 		
 		while(!running.isEmpty()) {
 			currentProcess = running.remove();
-			if(currentProcess.setResponseTime) {
-				int index = currentProcess.readyQueueIndex;
-				processAnalysis[index][3] = currentTime - newReadyQueue[index].arrivalTime;
-				currentProcess.setResponseTime = false;
-			}
 			currentProcess.waitTime = 0;
 			if(currentProcess.remaingBurstTime - timeQuantum > 0) {
+				setResponseTime();
 				currentTime += timeQuantum;
 				currentProcess.remaingBurstTime -= timeQuantum;
 				addWaitTime(timeQuantum);
 				scheduleNextProcess();
 			}else {
 				timeInCPU = currentProcess.remaingBurstTime;
+				setResponseTime();
 				currentTime += timeInCPU;
 				currentProcess.remaingBurstTime -= timeInCPU;
+				addWaitTime(timeInCPU);
 				int index = currentProcess.readyQueueIndex;
 				processAnalysis[index][1] = currentTime;
+				processAnalysis[index][4] = processAnalysis[index][1] - currentProcess.arrivalTime;
 				currentProcess.completed = true;
-				addWaitTime(timeInCPU);
 				scheduleNextProcess();
 			} //end if-else
 		} //end while
@@ -90,6 +88,7 @@ public class CurrentWaitTime {
 				break;
 			} //end if-else
 		} //end for
+		//printAnalysis();
 	} //end addWaitTime
 
 	private void scheduleNextProcess() {
@@ -112,22 +111,31 @@ public class CurrentWaitTime {
 		}
 	} //end scheduleNextProcess
 	
+	private void setResponseTime() {
+		if(currentProcess.setResponseTime) {
+			int index = currentProcess.readyQueueIndex;
+			processAnalysis[index][3] = currentTime - newReadyQueue[index].arrivalTime;
+			currentProcess.setResponseTime = false;
+		}
+	}
+	
 	public void printAnalysis() {
+		/*
 		System.out.println("\n Current Wait Time Algorithm\n");
 		System.out.println("\nProcesses Information\n\nID\tBurst Time\tArrival Time\tPriority\n");
 		for(int i=0; i< readyQueue.length; i++) {
 			System.out.println(readyQueue[i].PID + "\t" + readyQueue[i].getBurstTime()+ "\t\t"
 					 + readyQueue[i].getArrivalTime() + "\t\t" + readyQueue[i].getPriority());
 		}//end for
-		
+		*/
 		System.out.println("******************************************************");
 		System.out.println("Process ID|\tCompletion Time|\tWait Time|\t"
-				+ "Response Time|\tTurn Around Time|");
+				+ "Response Time|\tTurn Around Time|\t Arrival Time");
 		System.out.println("--------------------------------------------------------------------------------------------------------");
 		for(int i = 0; i < readyQueue.length; i++) {
 			System.out.println(processAnalysis[i][0] + "\t\t" + processAnalysis[i][1] + "\t\t\t"
 					+ processAnalysis[i][2] + "\t\t" + processAnalysis[i][3] + "\t\t"
-					 + processAnalysis[i][4]);
+					 + processAnalysis[i][4] + "\t\t\t" + readyQueue[i].arrivalTime);
 		} // end for
 	}
 }// end class

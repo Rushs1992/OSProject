@@ -13,7 +13,7 @@ public class Test {
 		Priority obj = new Priority();
 		obj.scheduleProcesses(S);
 
-		
+		/*
 		System.out.println("\nJuan");
 		RoundRobin R1 = new RoundRobin();
 		int[] completed_time = R1.getCompTime(S, 3);
@@ -24,7 +24,7 @@ public class Test {
 		System.out.println("\nMeet");
 		ShortestJobFirst T1 = new ShortestJobFirst();
 		T1.Test_SPF(S);
-		T1.DoShortestJobFirst(S);
+		T1.DoShortestJobFirst(S);*/
 
 		// Current Wait Time Algorithm
 		
