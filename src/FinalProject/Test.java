@@ -6,6 +6,9 @@ public class Test {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+    
+    
+    
 		System.out.println("\nRushang");
 		SimulateProcesses S = new SimulateProcesses(5);
 		initializeProcess(S);
@@ -13,9 +16,11 @@ public class Test {
 		Priority obj = new Priority();
 		obj.scheduleProcesses(S);
 		System.out.println("\nRushang finish");
-//
-//
-//		
+
+    
+    
+    
+    
 		System.out.println("\nJuan\n");
 		System.out.println("\nRound Robin Execution\n");
 		RoundRobin R1 = new RoundRobin();
@@ -23,8 +28,10 @@ public class Test {
 		R1.print_results(completed_time, S);
 		System.out.println("\nJuan finish");
 
-		
-		
+    
+    
+    
+    
 //		**Meet Working Area
 		System.out.println("\nMeet\n");	
 		ShortestJobFirst T1 = new ShortestJobFirst(S);
@@ -46,6 +53,8 @@ public class Test {
 //		System.out.println("\nMeet finish\n");
 
 
+    
+    
 //		**Current Wait Time Algorithm
 		
 		CurrentWaitTime C = new CurrentWaitTime(S);
