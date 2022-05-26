@@ -45,7 +45,7 @@ public class Priority {
 			int index = findNextProcess(); // search the next process to be scheduled
 			completedProcesses.put(readyQueue[index].getPID(), 1); // add completed process to the hash map
 			addProcessDetails(index, processesScheduled); // add process details to the running queue
-			runningQueue[processesScheduled][5] = currentTime; //add wait time for the process
+			runningQueue[processesScheduled][5] = currentTime - readyQueue[index].getArrivalTime(); //add wait time for the process
 			averageWait += currentTime; // add wait time to calculate average wait time
 			currentTime += readyQueue[index].getBurstTime(); //increase current time
 			totalCompletion += currentTime; // add total completion time
@@ -57,7 +57,7 @@ public class Priority {
 	} // end scheduleProcesses
 	
 	private int findNextProcess() {
-		// finds index from the redy queue for the next process
+		// finds index from the ready queue for the next process
 		int swapIndex = -1;
 		int tempIndex = -1;
 		currentPriority = -1;
@@ -108,7 +108,7 @@ public class Priority {
 	} //end printResult
 
 	public void addProcessDetails(int index, int queueIndex) {
-		// add process deatils to running queue
+		// add process details to running queue
 		runningQueue[queueIndex][0] = readyQueue[index].getPID();
 		runningQueue[queueIndex][1] = readyQueue[index].getPriority();
 		runningQueue[queueIndex][2] = readyQueue[index].getArrivalTime();
