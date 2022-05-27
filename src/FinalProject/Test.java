@@ -6,32 +6,43 @@ public class Test {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		System.out.println("Rushang created the test file");
-		SimulateProcesses S = new SimulateProcesses(10);
-		initializeProcess(S,10);
+
+		System.out.println("\nRushang");
+		SimulateProcesses S = new SimulateProcesses(5);
+		initializeProcess(S);
 		S.printProcess();
 		Priority obj = new Priority();
 		obj.scheduleProcesses(S);
-
-		// Methods added
-		System.out.println("\n Round Rabin Algorithm");
+		System.out.println("\nRushang finish");
+		System.out.println("\nJuan\n");
+		System.out.println("\nRound Robin Execution\n");
 		RoundRobin R1 = new RoundRobin();
 		int[] completed_time = R1.getCompTime(S, 3);
 		R1.print_results(completed_time, S);
-		//Metrics
-		System.out.println(R1.get_TAT(completed_time, S));
-		System.out.println(R1.get_WT(completed_time, S));
-		System.out.println(R1.get_RT());
-		System.out.println(R1.get_CT(completed_time));
-//		
-//		//Meet make out put
-//		
-		System.out.println("\n Shortest Job First Algorithm");
-		ShortestJobFirst T1 = new ShortestJobFirst();
-		T1.Test_SPF(S);
+		System.out.println("\nJuan finish");
+		System.out.println("\nMeet\n");	
+		ShortestJobFirst T1 = new ShortestJobFirst(S);
 		T1.DoShortestJobFirst(S);
+		
+//		**Printing out using the get methods
+//		float averageWaitTime;
+//		float averageTurnAroundTime;
+//		float averageResponseTime;
+//		int completionTime;
+//		averageWaitTime = T1.getAvgWait();
+//		averageTurnAroundTime = T1.getAvgTurnAround();
+//		averageResponseTime = T1.getAvgResp();
+//		completionTime = T1.getComptTime();
+//		System.out.println("\nAverage TAT: " + averageTurnAroundTime);
+//		System.out.println("Avg Wait Time: " + averageWaitTime);
+//		System.out.println("Average Resp Time" + averageResponseTime);
+//		System.out.println("Comp time: " + completionTime);
+//		System.out.println("\nMeet finish\n");
 
-		// Current Wait Time Algorithm
+
+    
+    
+//		**Current Wait Time Algorithm
 		
 		CurrentWaitTime C = new CurrentWaitTime(S);
 		C.scheduler();
