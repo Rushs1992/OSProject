@@ -13,7 +13,7 @@ public class Test {
 		Priority obj = new Priority();
 		obj.scheduleProcesses(S);
 
-		
+		// Methods added
 		System.out.println("\n Round Rabin Algorithm");
 		RoundRobin R1 = new RoundRobin();
 		int[] completed_time = R1.getCompTime(S, 3);
