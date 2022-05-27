@@ -9,6 +9,7 @@ public class Priority {
 	int currentTime; //current running time
 	float totalCompletion;
 	float averageWait;
+	float totalTurnAroundTime;
 	int averageResponse;
 	int currentPriority;
 	Process[] readyQueue; // copy of ready queue
@@ -18,6 +19,7 @@ public class Priority {
 	Priority(){ // constructor
 		currentTime = 0;
 		totalCompletion = 0;
+		totalTurnAroundTime = 0;
 		averageWait = 0;
 		averageResponse = 0;
 		totalProcesses = 0;
@@ -50,8 +52,10 @@ public class Priority {
 			currentTime += readyQueue[index].getBurstTime(); //increase current time
 			totalCompletion += currentTime; // add total completion time
 			runningQueue[processesScheduled][4] = currentTime; //add process completion time
+			totalTurnAroundTime += currentTime - readyQueue[index].getArrivalTime(); // calculate turn around time
 			processesScheduled++; //increase scheduled process count
 		}
+		averageWait = (averageWait/totalProcesses);
 		printResult();
 		
 	} // end scheduleProcesses
@@ -102,7 +106,7 @@ public class Priority {
 					 + runningQueue[index][4] + "\t\t" + runningQueue[index][5]);
 		} // end for
 		System.out.println("******************************************************");
-		System.out.println("Average wait time:\t\t" + averageWait*1.0/totalProcesses);
+		System.out.println("Average wait time:\t\t" + averageWait);
 		System.out.println("Average completion time:\t" + totalCompletion*1.0/totalProcesses);
 		System.out.println("******************************************************");
 	} //end printResult
@@ -124,5 +128,24 @@ public class Priority {
 		} // end for
 		return -1;
 	} //end findIndex
+	
+	public float getAvgWaitTime() {
+		float avgWaitTime = 0;
+		if(averageWait>0) {
+			return averageWait;
+		}
+		else {
+			return (float) (avgWaitTime);
+		}
+	} //end getAvgWaitTime
+	
+	public float getResponseTime() {
+		return getAvgWaitTime();
+	} // end getResponseTime
+	
+	public float getAvgTurnAroundTime() {
+		totalTurnAroundTime = (totalTurnAroundTime/totalProcesses);
+		return totalTurnAroundTime;
+	} //end getAvgTurnAroundTime
 	
 } // end class

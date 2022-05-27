@@ -6,6 +6,7 @@ import java.util.Queue;
 
 public class CurrentWaitTime {
 
+	int processCount = 0;
 	Process[] readyQueue;
 	ProcessNewProperties[] newReadyQueue;
 	int[][] processAnalysis;
@@ -30,6 +31,7 @@ public class CurrentWaitTime {
 			readyQueue[i] = S.processQueue[i];
 			newReadyQueue[i] = new ProcessNewProperties(S.processQueue[i],i);
 			processAnalysis[i][0] = S.processQueue[i].getPID(); //PID
+			processCount++;
 		} //end for
 	}//end constructor
 	
@@ -138,4 +140,38 @@ public class CurrentWaitTime {
 					 + processAnalysis[i][4] + "\t\t\t" + readyQueue[i].arrivalTime);
 		} // end for
 	}
+	
+	public float getAvgWaitTime() {
+		float avgWaitTime = 0;
+		if(!start) {
+			scheduler();
+		}
+		for(int i=0; i < processCount; i++) {
+			avgWaitTime += (processAnalysis[i][2])*1.0;
+		}
+		return (avgWaitTime/processCount);
+	} //end getAvgWaitTime
+	
+	public float getAvgResponseTime() {
+		float avgResponseTime = 0;
+		if(!start) {
+			scheduler();
+		}
+		for(int i=0; i < processCount; i++) {
+			avgResponseTime += (processAnalysis[i][3])*1.0;
+		}
+		return (avgResponseTime/processCount);
+	} //end getAvgResponseTime
+	
+	public float getAvgTurnAroundTime() {
+		float avgTurnAroundTime = 0;
+		if(!start) {
+			scheduler();
+		}
+		for(int i=0; i < processCount; i++) {
+			avgTurnAroundTime += (processAnalysis[i][4])*1.0;
+		}
+		return (avgTurnAroundTime/processCount);
+	} //end getAvgTurnAroundTime
+	
 }// end class
