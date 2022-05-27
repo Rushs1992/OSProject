@@ -7,21 +7,26 @@ public class Test {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		System.out.println("Rushang created the test file");
-		SimulateProcesses S = new SimulateProcesses(5);
-		initializeProcess(S);
+		SimulateProcesses S = new SimulateProcesses(10);
+		initializeProcess(S,10);
 		S.printProcess();
 		Priority obj = new Priority();
 		obj.scheduleProcesses(S);
 
 		
-		System.out.println("\nJuan");
+		System.out.println("\n Round Rabin Algorithm");
 		RoundRobin R1 = new RoundRobin();
 		int[] completed_time = R1.getCompTime(S, 3);
 		R1.print_results(completed_time, S);
+		//Metrics
+		System.out.println(R1.get_TAT(completed_time, S));
+		System.out.println(R1.get_WT(completed_time, S));
+		System.out.println(R1.get_RT());
+		System.out.println(R1.get_CT(completed_time));
 //		
 //		//Meet make out put
 //		
-		System.out.println("\nMeet");
+		System.out.println("\n Shortest Job First Algorithm");
 		ShortestJobFirst T1 = new ShortestJobFirst();
 		T1.Test_SPF(S);
 		T1.DoShortestJobFirst(S);
@@ -35,8 +40,8 @@ public class Test {
 	} //end psvm
 
 	
-static void initializeProcess(SimulateProcesses S) {
-		for(int i=1; i<=5; i++) {
+static void initializeProcess(SimulateProcesses S,int amount_processes) {
+		for(int i=1; i<=amount_processes; i++) {
 			Process P = new Process(i);
 			S.addProcesses(P);
 		} //end for
