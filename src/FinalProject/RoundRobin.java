@@ -44,7 +44,7 @@ public class RoundRobin {
 				  queue[0] = null;
 				  count = true;
 				  if(first_contact[id] == false) {
-					  response_time[id] = time;
+					  response_time[id] = time - arrival_time[id];
 					  first_contact[id] = true;
 				  }
 			  }
@@ -89,6 +89,77 @@ public class RoundRobin {
 		  
 		  return completed_time;
 	  }
+	  
+	  
+	  
+	  
+	  public float get_TAT(int[] completed_time, SimulateProcesses S) {
+			int[] arrival_time = new int[S.processQueue.length];
+		  	turn_around = new int[S.processQueue.length];
+			Process[] queue = new Process[S.processQueue.length];
+		  	float avg_turn_around = 0;
+		  	
+		  	 for(int i = 0; i < S.processQueue.length; i++) {
+				 arrival_time[S.processQueue[i].getPID()-1] =  S.processQueue[i].arrivalTime;
+				 queue[i] = S.processQueue[i];
+			  }
+			
+			  for(int i = 0; i < completed_time.length; i++){
+					turn_around[i] = completed_time[i] - arrival_time[i];
+			  }
+			  
+			  for(int i = 0; i < completed_time.length; i++){
+					avg_turn_around = avg_turn_around + turn_around[i];
+			}
+		  
+		  	avg_turn_around = avg_turn_around/turn_around.length;
+		  	return avg_turn_around;
+	  }
+	  
+	  public float get_WT(int[] completed_time, SimulateProcesses S) {
+		  	int[] burst_time = new int[S.processQueue.length];
+			int[] arrival_time = new int[S.processQueue.length];
+			waiting_time = new int[S.processQueue.length];
+			Process[] queue = new Process[S.processQueue.length];
+			float avg_waiting = 0;
+		  	
+			 for(int i = 0; i < S.processQueue.length; i++) {
+				 arrival_time[S.processQueue[i].getPID()-1] =  S.processQueue[i].arrivalTime;
+				 burst_time[S.processQueue[i].getPID()-1] =  S.processQueue[i].burstTime;
+				 queue[i] = S.processQueue[i];
+			  }
+			
+			
+			  for(int i = 0; i < completed_time.length; i++){
+				  waiting_time[i] = (completed_time[i] - arrival_time[i]) - burst_time[i];
+			  }
+			  
+			  for(int i = 0; i < completed_time.length; i++){
+					avg_waiting = avg_waiting + waiting_time[i];
+			}
+		  
+		  	avg_waiting = avg_waiting/waiting_time.length;
+		  	return avg_waiting;
+	  }
+	  
+	  public float get_RT() {
+		  float avg_response_time = 0;
+		  for(int i = 0; i < response_time.length; i++){
+			  avg_response_time = avg_response_time + response_time[i];
+		  }
+		  
+		  	return avg_response_time/response_time.length;
+	  }
+	  
+	  public float get_CT(int[] completed_time) {
+		  float avg_CT = 0;
+		  for(int i = 0; i < completed_time.length; i++){
+			  avg_CT = avg_CT + completed_time[i];
+		  }
+		  
+		  	return avg_CT/completed_time.length;
+	  }
+	  
 	  
 	  
 	  public void print_results(int[] completed_time, SimulateProcesses S) {
