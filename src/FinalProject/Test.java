@@ -3,23 +3,29 @@ package FinalProject;
 import java.util.Random;
 
 public class Test {
-
+		
+	static int processes_count = 5;
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
 		System.out.println("\nRushang");
-		SimulateProcesses S = new SimulateProcesses(5);
+		SimulateProcesses S = new SimulateProcesses(processes_count);
 		initializeProcess(S);
 		S.printProcess();
 		Priority obj = new Priority();
 		obj.scheduleProcesses(S);
 		System.out.println("\nRushang finish");
+		
+		
 		System.out.println("\nJuan\n");
 		System.out.println("\nRound Robin Execution\n");
 		RoundRobin R1 = new RoundRobin();
 		int[] completed_time = R1.getCompTime(S, 3);
 		R1.print_results(completed_time, S);
 		System.out.println("\nJuan finish");
+		
+		
 		System.out.println("\nMeet\n");	
 		ShortestJobFirst T1 = new ShortestJobFirst(S);
 		T1.DoShortestJobFirst(S);
@@ -37,8 +43,9 @@ public class Test {
 //		System.out.println("Avg Wait Time: " + averageWaitTime);
 //		System.out.println("Average Resp Time" + averageResponseTime);
 //		System.out.println("Comp time: " + completionTime);
-//		System.out.println("\nMeet finish\n");
-
+		
+		System.out.println("\nMeet finish\n");
+	
 
     
     
@@ -51,8 +58,8 @@ public class Test {
 	} //end psvm
 
 	
-static void initializeProcess(SimulateProcesses S,int amount_processes) {
-		for(int i=1; i<=amount_processes; i++) {
+static void initializeProcess(SimulateProcesses S) {
+		for(int i=1; i<=processes_count; i++) {
 			Process P = new Process(i);
 			S.addProcesses(P);
 		} //end for
