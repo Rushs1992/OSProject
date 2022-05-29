@@ -15,6 +15,8 @@ public class Test {
 		S.printProcess();
 		Priority obj = new Priority();
 		obj.scheduleProcesses(S);
+		System.out.println("TAT: "+obj.getAvgTurnAroundTime());
+		System.out.println("RT: "+obj.getResponseTime());
 		System.out.println("\nRushang finish");
 		
 		
@@ -22,6 +24,7 @@ public class Test {
 		System.out.println("\nRound Robin Execution\n");
 		RoundRobin R1 = new RoundRobin();
 		int[] completed_time = R1.getCompTime(S, 3);
+		R1.get_RT(S);
 		R1.print_results(completed_time, S);
 		System.out.println("\nJuan finish");
 		
@@ -54,6 +57,9 @@ public class Test {
 		CurrentWaitTime C = new CurrentWaitTime(S);
 		C.scheduler();
 		C.printAnalysis();
+		System.out.println("TAT: "+C.getAvgTurnAroundTime());
+		System.out.println("WT: "+C.getAvgWaitTime());
+		System.out.println("RT: "+C.getAvgResponseTime());
 		
 	} //end psvm
 
