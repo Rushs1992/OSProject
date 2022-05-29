@@ -44,7 +44,7 @@ public class RoundRobin {
 				  queue[0] = null;
 				  count = true;
 				  if(first_contact[id] == false) {
-					  response_time[id] = time - arrival_time[id];
+					  response_time[id] = time;
 					  first_contact[id] = true;
 				  }
 			  }
@@ -64,7 +64,8 @@ public class RoundRobin {
 				  
 			  }
 			  
-			  if(quantum == 0) {
+			  if(quantum <= 0) {
+				if(queue[1] != null && queue[1].arrivalTime <= time) {
 				  tmp = in_cpu;
 				  in_cpu = queue[0];
 				  count = false;
@@ -75,7 +76,7 @@ public class RoundRobin {
 					  
 				  }
 				  queue[in_queue] = tmp;
-				  
+				}
 			  }
 			  
 			
@@ -142,8 +143,19 @@ public class RoundRobin {
 		  	return avg_waiting;
 	  }
 	  
-	  public float get_RT() {
+	  public float get_RT(SimulateProcesses S) {
 		  float avg_response_time = 0;
+		  int[] arrival_time = new int[S.processQueue.length];
+		  
+		  for(int i = 0; i < S.processQueue.length; i++) {
+				 arrival_time[S.processQueue[i].getPID()-1] =  S.processQueue[i].arrivalTime;
+			  }
+			
+		  
+		  for(int i = 0; i < response_time.length; i++){
+			  response_time[S.processQueue[i].getPID()-1] = response_time[S.processQueue[i].getPID()-1] - arrival_time[S.processQueue[i].getPID()-1] ;
+		  }
+		  
 		  for(int i = 0; i < response_time.length; i++){
 			  avg_response_time = avg_response_time + response_time[i];
 		  }

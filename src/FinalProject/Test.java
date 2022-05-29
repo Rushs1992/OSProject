@@ -22,6 +22,7 @@ public class Test {
 		System.out.println("\nRound Robin Execution\n");
 		RoundRobin R1 = new RoundRobin();
 		int[] completed_time = R1.getCompTime(S, 3);
+		R1.get_RT(S);
 		R1.print_results(completed_time, S);
 		System.out.println("\nJuan finish");
 		
