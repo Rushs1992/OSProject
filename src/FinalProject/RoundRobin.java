@@ -22,12 +22,13 @@ public class RoundRobin {
 		  response_time = new int[S.processQueue.length];
 		  int[] completed_time = new int[S.processQueue.length];
 		  Process[] queue = new Process[S.processQueue.length];
+		  Process[] ready_queue = new Process[S.processQueue.length];
 		  int[] arrival_time = new int[S.processQueue.length];
 		  Process in_cpu = null;
 		  Process tmp = null;
 		  
 		  
-		  int in_queue = S.processQueue.length-1;
+		  int in_queue = 0 ;
 		  
 		  for(int i = 0; i < S.processQueue.length; i++) {
 			 arrival_time[S.processQueue[i].getPID()-1] =  S.processQueue[i].arrivalTime;
@@ -38,10 +39,30 @@ public class RoundRobin {
 		  
 		  while(completed != queue.length) {
 			  //Processes are put in the ready queue as they arrive
+			  
+			  for(int i = 0; i < queue.length;i++) {
+				  if(queue[i].arrivalTime == time) {
+					  ready_queue[in_queue] = queue[i];
+					  if(in_queue < queue.length - 1) {
+						  in_queue++;
+					  }  
+				  }
+			  }
+			  
 			  if(in_cpu == null) {
-				  in_cpu = queue[0];
-				  id = queue[0].PID-1;
-				  queue[0] = null;
+				  in_cpu = ready_queue[0];
+				  id = ready_queue[0].PID-1;
+				  ready_queue[0] = null;
+				  for(int i = 0; i < in_queue;i++) {
+					  ready_queue[i] = ready_queue[i+1];
+					  ready_queue[i+1] = null;
+					  
+				  }
+				  
+				  if(in_queue > 0) {
+					  in_queue--;
+				  }
+				
 				  count = true;
 				  if(first_contact[id] == false) {
 					  response_time[id] = time;
@@ -49,43 +70,34 @@ public class RoundRobin {
 				  }
 			  }
 			  
+		
+			  
 			  if(rem_time[id] == 0) {
 				  completed++;
 				  completed_time[id] = time;
-				  in_cpu = queue[0];
-				  count = false;
+				  in_cpu = null;
+				  count = false; 
 				  quantum = 3;
-				  for(int i = 0; i < in_queue;i++) {
-					  queue[i] = queue[i+1];
-					  queue[i+1] = null;
-					  
-				  }
-				  in_queue--;
+				
 				  
 			  }
 			  
-			  if(quantum <= 0) {
-				if(queue[1] != null && queue[1].arrivalTime <= time) {
+			  if(quantum == 0) {
 				  tmp = in_cpu;
-				  in_cpu = queue[0];
+				  in_cpu = null;
 				  count = false;
 				  quantum = 3;
-				  for(int i = 0; i < in_queue;i++) {
-					  queue[i] = queue[i+1];
-					  queue[i+1] = null;
-					  
-				  }
-				  queue[in_queue] = tmp;
-				}
+				  ready_queue[in_queue] = tmp;
+				 
 			  }
 			  
-			
-
 			if(count == true) {
-			  rem_time[id]--;
-			  quantum--;
-			  time++;
-			 }
+				  rem_time[id]--;
+				  quantum--;
+				  time++;
+			}
+			
+		
 		  }
 		  
 		  return completed_time;

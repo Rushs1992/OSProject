@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Test {
 		
-	static int processes_count = 5;
+	static int processes_count = 29;
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -15,11 +15,9 @@ public class Test {
 		S.printProcess();
 		Priority obj = new Priority();
 		obj.scheduleProcesses(S);
-		System.out.println("TAT: "+obj.getAvgTurnAroundTime());
-		System.out.println("RT: "+obj.getResponseTime());
 		System.out.println("\nRushang finish");
 		
-		
+		/*
 		System.out.println("\nJuan\n");
 		System.out.println("\nRound Robin Execution\n");
 		RoundRobin R1 = new RoundRobin();
@@ -27,7 +25,7 @@ public class Test {
 		R1.get_RT(S);
 		R1.print_results(completed_time, S);
 		System.out.println("\nJuan finish");
-		
+		*/
 		
 		System.out.println("\nMeet\n");	
 		ShortestJobFirst T1 = new ShortestJobFirst(S);
@@ -57,9 +55,9 @@ public class Test {
 		CurrentWaitTime C = new CurrentWaitTime(S);
 		C.scheduler();
 		C.printAnalysis();
-		System.out.println("TAT: "+C.getAvgTurnAroundTime());
-		System.out.println("WT: "+C.getAvgWaitTime());
-		System.out.println("RT: "+C.getAvgResponseTime());
+		
+		
+		
 		
 	} //end psvm
 
