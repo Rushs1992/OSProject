@@ -64,7 +64,7 @@ public class ShortestJobFirst {
 		averageTAT = totalTAT/S.processQueue.length;	// calculating average of Turn Around Time
 		averageWT = totalWT/S.processQueue.length;		// calculating average of Wait Time
 		
-		printResults(S);	//Print the Results
+//		printResults(S);	//Print the Results
 	
 	}
 

@@ -56,7 +56,7 @@ public class Priority {
 			processesScheduled++; //increase scheduled process count
 		}
 		averageWait = (averageWait/totalProcesses);
-		printResult();
+//		printResult();
 		
 	} // end scheduleProcesses
 	
