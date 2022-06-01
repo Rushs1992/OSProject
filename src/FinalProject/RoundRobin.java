@@ -1,16 +1,18 @@
 package FinalProject;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class RoundRobin {
 	  int[] response_time;
 	  int[] turn_around;
 	  int[] waiting_time;
+	  Queue<Process> ready_queue = new LinkedList<Process>();
 	  
 	  public RoundRobin() {
 		  
 		  
 	  }
-	  
-	 
 	  
 	  public int[] getCompTime(SimulateProcesses S,int quantum) {
 		  int[] rem_time = new int[S.processQueue.length];
@@ -22,13 +24,10 @@ public class RoundRobin {
 		  response_time = new int[S.processQueue.length];
 		  int[] completed_time = new int[S.processQueue.length];
 		  Process[] queue = new Process[S.processQueue.length];
-		  Process[] ready_queue = new Process[S.processQueue.length];
 		  int[] arrival_time = new int[S.processQueue.length];
 		  Process in_cpu = null;
 		  Process tmp = null;
 		  
-		  
-		  int in_queue = 0 ;
 		  
 		  for(int i = 0; i < S.processQueue.length; i++) {
 			 arrival_time[S.processQueue[i].getPID()-1] =  S.processQueue[i].arrivalTime;
@@ -42,44 +41,27 @@ public class RoundRobin {
 			  
 			  for(int i = 0; i < queue.length;i++) {
 				  if(queue[i].arrivalTime == time) {
-					  ready_queue[in_queue] = queue[i];
-					  if(in_queue < queue.length - 1) {
-						  in_queue++;
-					  }  
+					  ready_queue.add(queue[i]);
 				  }
 			  }
 			  
 			  if(in_cpu == null) {
-				  in_cpu = ready_queue[0];
-				  id = ready_queue[0].PID-1;
-				  ready_queue[0] = null;
-				  for(int i = 0; i < in_queue;i++) {
-					  ready_queue[i] = ready_queue[i+1];
-					  ready_queue[i+1] = null;
-					  
-				  }
-				  
-				  if(in_queue > 0) {
-					  in_queue--;
-				  }
-				
+				  in_cpu = ready_queue.remove();  
 				  count = true;
-				  if(first_contact[id] == false) {
-					  response_time[id] = time;
-					  first_contact[id] = true;
+				  if(first_contact[in_cpu.PID-1] == false) {
+					  response_time[in_cpu.PID-1] = time;
+					  first_contact[in_cpu.PID-1] = true;
 				  }
 			  }
 			  
 		
 			  
-			  if(rem_time[id] == 0) {
+			  if(rem_time[in_cpu.PID-1] == 0) {
 				  completed++;
-				  completed_time[id] = time;
+				  completed_time[in_cpu.PID-1] = time;
 				  in_cpu = null;
 				  count = false; 
-				  quantum = 3;
-				
-				  
+				  quantum = 3;  
 			  }
 			  
 			  if(quantum == 0) {
@@ -87,12 +69,12 @@ public class RoundRobin {
 				  in_cpu = null;
 				  count = false;
 				  quantum = 3;
-				  ready_queue[in_queue] = tmp;
+				  ready_queue.add(tmp);
 				 
 			  }
 			  
 			if(count == true) {
-				  rem_time[id]--;
+				  rem_time[in_cpu.PID-1]--;
 				  quantum--;
 				  time++;
 			}

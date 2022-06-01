@@ -17,11 +17,10 @@ public class CurrentWaitTime {
 	ProcessNewProperties currentProcess;
 	Queue<ProcessNewProperties> running = new LinkedList<ProcessNewProperties>();
 	
-	CurrentWaitTime(){
-		
-	} //end constructor
+	double multiplyingFactor;
 	
-	CurrentWaitTime(SimulateProcesses S){
+	CurrentWaitTime(SimulateProcesses S, double mFactor){
+		multiplyingFactor = mFactor;
 		readyQueue = new Process[S.processCount];
 		newReadyQueue = new ProcessNewProperties[S.processCount];
 		processAnalysis = new int[S.processCount][5];
@@ -83,7 +82,7 @@ public class CurrentWaitTime {
 						processAnalysis[i][2] += time;
 					} // end inner if-else
 					if(newReadyQueue[i].priority >1) {
-						newReadyQueue[i].waitTime *= (1-(newReadyQueue[i].priority*0.1));
+						newReadyQueue[i].waitTime *= (1-(newReadyQueue[i].priority*multiplyingFactor));
 					}
 				} //end if
 			}else {
