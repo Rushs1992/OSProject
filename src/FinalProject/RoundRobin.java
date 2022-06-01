@@ -41,7 +41,9 @@ public class RoundRobin {
 			  
 			  for(int i = 0; i < queue.length;i++) {
 				  if(queue[i].arrivalTime == time) {
-					  ready_queue.add(queue[i]);
+					  if(ready_queue.size() != queue.length) {
+						  ready_queue.add(queue[i]);
+					  } 
 				  }
 			  }
 			  
@@ -69,7 +71,9 @@ public class RoundRobin {
 				  in_cpu = null;
 				  count = false;
 				  quantum = 3;
-				  ready_queue.add(tmp);
+				  if(ready_queue.size() != queue.length) {
+					  ready_queue.add(tmp);
+				  }
 				 
 			  }
 			  
