@@ -38,7 +38,7 @@ public class RoundRobin {
 		  
 		  while(completed != queue.length) {
 			  //Processes are put in the ready queue as they arrive
-			  
+			  // Put processes in ready queue as they arrive
 			  for(int i = 0; i < queue.length;i++) {
 				  if(queue[i].arrivalTime == time) {
 					  if(ready_queue.size() != queue.length) {
@@ -46,7 +46,7 @@ public class RoundRobin {
 					  } 
 				  }
 			  }
-			  
+			  // Schedule a new process
 			  if(in_cpu == null) {
 				  in_cpu = ready_queue.remove();  
 				  count = true;
@@ -56,7 +56,7 @@ public class RoundRobin {
 				  }
 			  }
 			  
-		
+		// Verify if the process has finished
 			  
 			  if(rem_time[in_cpu.PID-1] == 0) {
 				  completed++;
@@ -65,7 +65,7 @@ public class RoundRobin {
 				  count = false; 
 				  quantum = 3;  
 			  }
-			  
+			  // Verify if quantum its over
 			  if(quantum == 0) {
 				  tmp = in_cpu;
 				  in_cpu = null;
