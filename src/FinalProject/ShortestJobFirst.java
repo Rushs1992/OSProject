@@ -77,17 +77,19 @@ public class ShortestJobFirst {
 		Arrays.fill(arrCompletedProcesses, 0);
 	}
 	
-	private void printResults(SimulateProcesses S) {
+	public void printResults(SimulateProcesses S) {
 		// This function prints the arrays in tabular form and prints the average TAT, WT and RT
+		
+		System.out.println("******************************************************");
 		System.out.println("ID\tBurst Time\tArrival Time\tResponse Time\tComp Time\tTAT\tWT");
 		for(int i=0;i<S.processQueue.length;i++) {
 			System.out.println(processIDs[i]+"\t"+S.processQueue[i].getBurstTime()+"\t\t"+S.processQueue[i].getArrivalTime()+"\t\t"
 					+processWT[i]+"\t\t"+processCompTime[i]+"\t\t"+processTAT[i]+"\t"+processWT[i]);
 		}
-		System.out.println("The average Turn Around Time is " + averageTAT);
-		System.out.println("The average Waiting Time is " + averageWT);
-		System.out.println("The average Response Time is " + averageWT);	// Waiting Time = Response Time in SJF
-		System.out.println("Completion Time: " + currentTime);	// Completion time = time at which the last process ends
+//		System.out.println("The average Turn Around Time is " + averageTAT);
+//		System.out.println("The average Waiting Time is " + averageWT);
+//		System.out.println("The average Response Time is " + averageWT);	// Waiting Time = Response Time in SJF
+//		System.out.println("Completion Time: " + currentTime);	// Completion time = time at which the last process ends
 	}
 	
 	public float getAvgTurnAround() {
