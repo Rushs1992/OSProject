@@ -1,16 +1,18 @@
 package FinalProject;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class RoundRobin {
 	  int[] response_time;
 	  int[] turn_around;
 	  int[] waiting_time;
+	  Queue<Process> ready_queue = new LinkedList<Process>();
 	  
 	  public RoundRobin() {
 		  
 		  
 	  }
-	  
-	 
 	  
 	  public int[] getCompTime(SimulateProcesses S,int quantum) {
 		  int[] rem_time = new int[S.processQueue.length];
@@ -27,8 +29,6 @@ public class RoundRobin {
 		  Process tmp = null;
 		  
 		  
-		  int in_queue = S.processQueue.length-1;
-		  
 		  for(int i = 0; i < S.processQueue.length; i++) {
 			 arrival_time[S.processQueue[i].getPID()-1] =  S.processQueue[i].arrivalTime;
 			 first_contact[S.processQueue[i].getPID()-1] = false;
@@ -38,54 +38,48 @@ public class RoundRobin {
 		  
 		  while(completed != queue.length) {
 			  //Processes are put in the ready queue as they arrive
+			  
+			  for(int i = 0; i < queue.length;i++) {
+				  if(queue[i].arrivalTime == time) {
+					  ready_queue.add(queue[i]);
+				  }
+			  }
+			  
 			  if(in_cpu == null) {
-				  in_cpu = queue[0];
-				  id = queue[0].PID-1;
-				  queue[0] = null;
+				  in_cpu = ready_queue.remove();  
 				  count = true;
-				  if(first_contact[id] == false) {
-					  response_time[id] = time;
-					  first_contact[id] = true;
+				  if(first_contact[in_cpu.PID-1] == false) {
+					  response_time[in_cpu.PID-1] = time;
+					  first_contact[in_cpu.PID-1] = true;
 				  }
 			  }
 			  
-			  if(rem_time[id] == 0) {
+		
+			  
+			  if(rem_time[in_cpu.PID-1] == 0) {
 				  completed++;
-				  completed_time[id] = time;
-				  in_cpu = queue[0];
-				  count = false;
-				  quantum = 3;
-				  for(int i = 0; i < in_queue;i++) {
-					  queue[i] = queue[i+1];
-					  queue[i+1] = null;
-					  
-				  }
-				  in_queue--;
-				  
+				  completed_time[in_cpu.PID-1] = time;
+				  in_cpu = null;
+				  count = false; 
+				  quantum = 3;  
 			  }
 			  
-			  if(quantum <= 0) {
-				if(queue[1] != null && queue[1].arrivalTime <= time) {
+			  if(quantum == 0) {
 				  tmp = in_cpu;
-				  in_cpu = queue[0];
+				  in_cpu = null;
 				  count = false;
 				  quantum = 3;
-				  for(int i = 0; i < in_queue;i++) {
-					  queue[i] = queue[i+1];
-					  queue[i+1] = null;
-					  
-				  }
-				  queue[in_queue] = tmp;
-				}
+				  ready_queue.add(tmp);
+				 
 			  }
 			  
-			
-
 			if(count == true) {
-			  rem_time[id]--;
-			  quantum--;
-			  time++;
-			 }
+				  rem_time[in_cpu.PID-1]--;
+				  quantum--;
+				  time++;
+			}
+			
+		
 		  }
 		  
 		  return completed_time;

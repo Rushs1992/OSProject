@@ -13,7 +13,10 @@ public class Test {
 		SimulateProcesses S = new SimulateProcesses(processes_count);
 		initializeProcess(S);
 		S.printProcess();
+
 		
+
+
 //		**FIFO Algorithm
 		
 		FIFO obj1 = new FIFO();
@@ -25,6 +28,7 @@ public class Test {
 		System.out.println("RT: "+obj1.getResponseTime());
 		
 		
+
 //		**Priority Algorithm
 		
 		Priority obj = new Priority();
@@ -38,14 +42,16 @@ public class Test {
 		
 		
 //		**Round Robin Algorithm (in process for report)
-		
+//		System.out.println("\nJuan\n");
 //		System.out.println("\nRound Robin Execution\n");
 //		RoundRobin R1 = new RoundRobin();
 //		int[] completed_time = R1.getCompTime(S, 3);
 //		R1.get_RT(S);
 //		R1.print_results(completed_time, S);
-
+//		System.out.println("\nJuan finish");
+    
 		
+    
 //		**Shortest Job First Algorithms.
 		
 		ShortestJobFirst T1 = new ShortestJobFirst(S);
@@ -56,7 +62,8 @@ public class Test {
 		System.out.println("WT: " + T1.getAvgWait());
 		System.out.println("RT: " + T1.getAvgResp());	
     
-		
+
+    
 //		**Current Wait Time Algorithm
 		
 		CurrentWaitTime C01 = new CurrentWaitTime(S,mFactor);
