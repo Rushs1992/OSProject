@@ -94,7 +94,7 @@ public class Priority {
 
 	public void printResult() {
 		//method to print results
-		System.out.println("Priority scheduling results");
+//		System.out.println("Priority scheduling results");
 		System.out.println("******************************************************");
 		System.out.println("Process ID|\tPriority|\tArrival Time|\tBurst Time|\t"
 				+ "Completion Time|\tWait Time|");
@@ -105,10 +105,10 @@ public class Priority {
 					+ runningQueue[index][2] + "\t\t" + runningQueue[index][3] + "\t\t"
 					 + runningQueue[index][4] + "\t\t" + runningQueue[index][5]);
 		} // end for
-		System.out.println("******************************************************");
-		System.out.println("Average wait time:\t\t" + averageWait);
-		System.out.println("Average completion time:\t" + totalCompletion*1.0/totalProcesses);
-		System.out.println("******************************************************");
+//		System.out.println("******************************************************");
+//		System.out.println("Average wait time:\t\t" + averageWait);
+//		System.out.println("Average completion time:\t" + totalCompletion*1.0/totalProcesses);
+//		System.out.println("******************************************************");
 	} //end printResult
 
 	public void addProcessDetails(int index, int queueIndex) {

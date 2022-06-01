@@ -51,7 +51,7 @@ public class FIFO {
 	
 	public void printResult() {
 		//method to print results
-		System.out.println("FIFO scheduling results");
+//		System.out.println("FIFO scheduling results");
 		System.out.println("******************************************************");
 		System.out.println("Process ID|\tBurst Time|\tArrival Time|\tWait Time|\tTurn Around Time|");
 		System.out.println("--------------------------------------------------------------------------------------------------------");
@@ -60,10 +60,10 @@ public class FIFO {
 					+ runningQueue[i][2] + "\t\t" + runningQueue[i][3] + "\t\t"
 					 + runningQueue[i][4]);
 		} // end for
-		System.out.println("******************************************************");
-		System.out.println("Average wait time:\t\t" + averageWait/totalProcesses);
-		System.out.println("Average turn around time time:\t" + totalTurnAroundTime/totalProcesses);
-		System.out.println("******************************************************");
+//		System.out.println("******************************************************");
+//		System.out.println("Average wait time:\t\t" + averageWait/totalProcesses);
+//		System.out.println("Average turn around time time:\t" + totalTurnAroundTime/totalProcesses);
+//		System.out.println("******************************************************");
 	} //end printResult
 	
 	public float getAvgWaitTime() {
