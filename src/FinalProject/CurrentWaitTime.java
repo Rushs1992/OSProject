@@ -89,7 +89,7 @@ public class CurrentWaitTime {
 				break;
 			} //end if-else
 		} //end for
-		//printAnalysis();
+//		printResults();
 	} //end addWaitTime
 
 	private void scheduleNextProcess() {
@@ -120,7 +120,7 @@ public class CurrentWaitTime {
 		}
 	}
 	
-	public void printAnalysis() {
+	public void printResults() {
 		/*
 		System.out.println("\n Current Wait Time Algorithm\n");
 		System.out.println("\nProcesses Information\n\nID\tBurst Time\tArrival Time\tPriority\n");
