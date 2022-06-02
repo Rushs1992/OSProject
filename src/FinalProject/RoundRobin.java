@@ -41,7 +41,7 @@ public class RoundRobin {
 			  // Put processes in ready queue as they arrive
 			  for(int i = 0; i < queue.length;i++) {
 				  if(queue[i].arrivalTime == time) {
-					  if(ready_queue.size() != queue.length) {
+					  if(!ready_queue.contains(queue[i])) {
 						  ready_queue.add(queue[i]);
 					  } 
 				  }
@@ -71,9 +71,9 @@ public class RoundRobin {
 				  in_cpu = null;
 				  count = false;
 				  quantum = 3;
-				  if(ready_queue.size() != queue.length) {
+				  if(!ready_queue.contains(tmp)) {
 					  ready_queue.add(tmp);
-				  }
+				  } 
 				 
 			  }
 			  
