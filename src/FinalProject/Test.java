@@ -40,6 +40,14 @@ public class Test {
 		System.out.println("RT: "+obj.getResponseTime());
 
 		
+
+		System.out.println("\nJuan\n");
+		System.out.println("\nRound Robin Execution\n");
+		RoundRobin R1 = new RoundRobin();
+		int[] completed_time = R1.getCompTime(S, 3);
+		R1.print_results(completed_time, S);
+		System.out.println("AVG RT: "+R1.get_RT(S));
+
 		
 //		**Round Robin Algorithm (in process for report)
 //		System.out.println("\nJuan\n");
